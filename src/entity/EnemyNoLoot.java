@@ -46,23 +46,22 @@ public class EnemyNoLoot extends Entity{
 		}
 	}
 	
-	public boolean checkPlayer() {
+	public void checkPlayer() {
 		if(worldX == gp.player.worldX && worldY == gp.player.worldY) {
-			return true;
+			gp.player.sterben("Gegner", screenX / gp.tileSize, screenY / gp.tileSize, "0");
 		}
 		if(worldX == gp.player.worldX + gp.tileSize && worldY == gp.player.worldY) {
-			return true;
+			gp.player.sterben("Gegner", screenX / gp.tileSize, screenY / gp.tileSize, "O");
 		}
 		if(worldX == gp.player.worldX - gp.tileSize && worldY == gp.player.worldY) {
-			return true;
+			gp.player.sterben("Gegner", screenX / gp.tileSize, screenY / gp.tileSize, "W");
 		}
 		if(worldX == gp.player.worldX && worldY == gp.player.worldY + gp.tileSize) {
-			return true;
+			gp.player.sterben("Gegner", screenX / gp.tileSize, screenY / gp.tileSize, "S");
 		}
 		if(worldX == gp.player.worldX && worldY == gp.player.worldY - gp.tileSize) {
-			return true;
+			gp.player.sterben("Gegner", screenX / gp.tileSize, screenY / gp.tileSize, "N");
 		}
-		return false;
 	}
 	
 	public void enemyMovement() {
@@ -181,9 +180,7 @@ public class EnemyNoLoot extends Entity{
 	public void update() {
 		if(worldSpawnX[gp.welt - 1] != 9999) {
 			
-			if(checkPlayer()) {
-				gp.player.sterben("Gegner", screenX / gp.tileSize, screenY / gp.tileSize);
-			}
+			checkPlayer();
 			
 			steinAufKopf();
 			enemySprite();

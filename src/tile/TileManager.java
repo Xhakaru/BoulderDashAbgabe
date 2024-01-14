@@ -275,50 +275,64 @@ public class TileManager {
 		}
 	}
 	
-	public void stonePush(int worldX, int worldY, int varX, int varY) {
-		int x = worldX + varX;
-		int y = worldY + varY;
-		int c = worldX;
-		int v = worldY;
-		int tileCol = 0;
-		int tileRow = 0;
-		
-		if(varX > 0) {
-			tileCol = c / gp.tileSize;
-			tileRow = v / gp.tileSize;
-			if(mapTileNum[tileCol + 2][tileRow] == 5 || fallingCol[tileCol - 1] == true) {
-				stoneCollision = false;
-				mapTileNum[tileCol + 1][tileRow] = 5;
-				
-				tileCol = x / gp.tileSize;
-				tileRow = y / gp.tileSize;
-				mapTileNum[tileCol + 1][tileRow] = 4;
-			}
-			else {
-				stoneCollision = true;
-			}
-		}
-		else if(varX < 0) {
-			tileCol = c / gp.tileSize;
-			tileRow = v / gp.tileSize;
-			if(mapTileNum[tileCol - 2][tileRow] == 5 || fallingCol[tileCol + 1] == true) {
-				stoneCollision = false;
-				mapTileNum[tileCol - 1][tileRow] = 5;
-				
-				tileCol = x / gp.tileSize;
-				tileRow = y / gp.tileSize;
-				mapTileNum[tileCol - 1][tileRow] = 4;
-			}
-			else {
-				stoneCollision = true;
-			}
-		}
-	}
+	public void stonePush(int worldX, int worldY, int tileSizeX, int tileSizeY) {
+        int x = worldX + tileSizeX;
+        int y = worldY + tileSizeY;
+        int c = worldX;
+        int v = worldY;
+        int tileCol = 0;
+        int tileRow = 0;
+
+        if(tileSizeX > 0) {
+            tileCol = c / gp.tileSize;
+            tileRow = v / gp.tileSize;
+            if(mapTileNum[tileCol + 2][tileRow] == 5) {
+                if(mapTileNum[tileCol +1][tileRow +1] == 5) {                //hier wird geschaut, ob der Stein in der Luft ist.
+                    stoneCollision = true;
+                    System.out.println("Stein ist in der Luft");
+                }else {
+                    stoneCollision = false;
+                    mapTileNum[tileCol +1][tileRow] = 5;
+
+                    tileCol = x / gp.tileSize;
+                    tileRow = y / gp.tileSize;
+                    mapTileNum[tileCol + 1][tileRow] = 4;
+                }
+            }
+            else {
+                stoneCollision = true;
+            }
+        }
+        else if(tileSizeX < 0) {
+            tileCol = c / gp.tileSize;
+            tileRow = v / gp.tileSize;
+            if(mapTileNum[tileCol - 2][tileRow] == 5) {
+                if(mapTileNum[tileCol -1][tileRow +1] == 5) {
+                    stoneCollision = true;
+                    System.out.println("Stein ist in der Luft");
+                }else {
+                    stoneCollision = false;
+                    mapTileNum[tileCol -1][tileRow] = 5;
+
+                    tileCol = x / gp.tileSize;
+                    tileRow = y / gp.tileSize;
+                    mapTileNum[tileCol - 1][tileRow] = 4;
+                }
+            }
+            else {
+                stoneCollision = true;
+            }
+        }
+    }
 	
 	public void stoneFall(int col, int row) {
+		int Xcol = gp.player.worldX / gp.tileSize;
+		int Yrow = gp.player.worldY / gp.tileSize;
+		
+		
 		if(mapTileNum[col][row] == 4) {
 			if(col == gp.player.worldX / gp.tileSize && row == gp.player.worldY / gp.tileSize) {
-				gp.player.sterben("Stein Ground", 0, 0);
+				gp.player.sterben("Stein Ground", 0, 0, "null");
 			}
 			boolean skip = false;
 			if(!fallingCol[col] && col == gp.player.worldX / gp.tileSize && row == gp.player.worldY / gp.tileSize - 1) { 
@@ -339,6 +353,9 @@ public class TileManager {
 			boolean playerInWayXposMinusOne = false;
 			if(gp.player.worldY / gp.tileSize == row + 1 && gp.player.worldX / gp.tileSize == col + 1) {
 				playerInWayXposMinusOne = true;
+			}
+			if(col == Xcol && row == Yrow -1 && skip == false) {
+				gp.player.sterben("Stein Ground", 0, 0, "null");
 			}
 			if(mapTileNum[col][row + 1] == 5 && !skip) {
 				mapTileNum[col][row] = 5;
@@ -413,9 +430,12 @@ public class TileManager {
 	}
 	
 	public void rubinFall(int col, int row) {
+		int Xcol = gp.player.worldX / gp.tileSize;
+		int Yrow = gp.player.worldY / gp.tileSize;
+		
 		if(mapTileNum[col][row] == 1) {
 			if(col == gp.player.worldX / gp.tileSize && row == gp.player.worldY / gp.tileSize) {
-				gp.player.sterben("Rubin Ground", 0, 0);
+				gp.player.sterben("Rubin Ground", 0, 0, "null");
 			}
 			boolean skip = false;
 			if(!fallingCol[col] && col == gp.player.worldX / gp.tileSize && row == gp.player.worldY / gp.tileSize - 1) { 
@@ -436,6 +456,9 @@ public class TileManager {
 			boolean playerInWayXposMinusOne = false;
 			if(gp.player.worldY / gp.tileSize == row + 1 && gp.player.worldX / gp.tileSize == col + 1) {
 				playerInWayXposMinusOne = true;
+			}
+			if(col == Xcol && row == Yrow -1 && skip == false) {
+				gp.player.sterben("Stein Ground", 0, 0, "null");
 			}
 			if(mapTileNum[col][row + 1] == 5 && !skip) {
 				mapTileNum[col][row] = 5;
@@ -829,13 +852,13 @@ public class TileManager {
 			}
 			
 			stoneFallCounter++;
-			if(stoneFallCounter > 18) {
+			if(stoneFallCounter > 18 && gp.animationPause == false) {
 				stoneFall(worldCol, worldRow);
 				stoneFallCounter = 0;
 			}
 			
 			rubinFallCounter++;
-			if(rubinFallCounter > 18) {
+			if(rubinFallCounter > 18 && gp.animationPause == false) {
 				rubinFall(worldCol, worldRow);
 				rubinFallCounter = 0;
 			}

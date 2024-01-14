@@ -58,19 +58,19 @@ public class EnemyWithLoot extends Entity{
 	public void checkPlayer() {
 		for(int i = 1; i <= enemyCounter; i++) {
 			if(worldX[i] == gp.player.worldX && worldY[i] == gp.player.worldY) {
-				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize);
+				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize, "0");
 			}
 			if(worldX[i] == gp.player.worldX + gp.tileSize && worldY[i] == gp.player.worldY) {
-				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize);
+				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize, "O");
 			}
 			if(worldX[i] == gp.player.worldX - gp.tileSize && worldY[i] == gp.player.worldY) {
-				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize);
+				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize, "W");
 			}
 			if(worldX[i] == gp.player.worldX && worldY[i] == gp.player.worldY + gp.tileSize) {
-				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize);
+				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize, "S");
 			}
 			if(worldX[i] == gp.player.worldX && worldY[i] == gp.player.worldY - gp.tileSize) {
-				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize);
+				gp.player.sterben("Gegner mit Loot", screenX[i] / gp.tileSize, screenY[i] / gp.tileSize, "N");
 			}
 		}
 	}

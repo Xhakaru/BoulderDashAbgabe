@@ -373,7 +373,7 @@ public class Levelbord {
 	    	}
 		}
 		else {
-			gp.player.sterben("Zeit", 0, 0);
+			gp.player.sterben("Zeit", 0, 0, "null");
 		}
 		
 		if(anzahlZeit <= speedZeit) {

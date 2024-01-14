@@ -176,12 +176,12 @@ public class Player extends Entity{
 		screenY = worldY - gp.tileM.chunks[gp.tileM.playerChunkY][gp.tileM.playerChunkX].sbUp * gp.tileSize + gp.tileSize;
 	}
 	
-	public void sterben(String grund, int col, int row) {
-		gp.animation.startDeathanimation(screenX / gp.tileSize, screenY / gp.tileSize, grund, col, row);
+	public void sterben(String grund, int col, int row, String direction) {
+		gp.animation.startDeathanimation(grund, col, row, direction);
+		leben -= 1;
 	}
 	
 	public void sterben2(String grund) {
-		leben -= 1;
 		if(grund == "Gegner") {
 			System.out.println("Der Gegner hat dich getötet.");
 		}
@@ -232,7 +232,7 @@ public class Player extends Entity{
 		
 		if(keyH.backspacePressed == true) {
 			keyH.backspacePressed = false;
-			sterben("Retry", 0, 0);
+			sterben("Retry", 0, 0, "null");
 		}
 		
 		if(keyH.upPressed == true || 
@@ -368,28 +368,28 @@ public class Player extends Entity{
 			}
 			
 			if(finish == true) {
-				System.out.println("Level geschafft! Let's go ins Nächste.");
 				if(gp.welt != 5) {
+					System.out.println("Level geschafft! Let's go ins Nächste.");
 					gp.welt += 1;
+					switch(gp.welt) {
+						case(3):
+							gp.tileM.loadMap("/maps/world03.txt");
+							break;
+						case(4):
+							gp.tileM.loadMap("/maps/world04.txt");
+							break;
+						case(5):
+							gp.tileM.loadMap("/maps/world05.txt");
+							break;
+					}
+					setDefaultValues(gp.welt);
+					gp.enemyNL.setDefaultValues();
+					gp.levelB.resetTime();
 				}
 				else {
 					System.out.println("Level geschafft! Du hast das Spiel durchgespielt.");
 					gp.animation.startEndanimation();
 				}
-				switch(gp.welt) {
-					case(3):
-						gp.tileM.loadMap("/maps/world03.txt");
-						break;
-					case(4):
-						gp.tileM.loadMap("/maps/world04.txt");
-						break;
-					case(5):
-						gp.tileM.loadMap("/maps/world05.txt");
-						break;
-				}
-				setDefaultValues(gp.welt);
-				gp.enemyNL.setDefaultValues();
-				gp.levelB.resetTime();
 			}
 			
 			spriteCounter++;

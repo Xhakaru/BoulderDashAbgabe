@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	// SCREEN SETTINGS
 	final int originalTileSize = 16; // 16x16 tile
-	final int scale = 4;
+	final int scale = 3;
 	
 	public final int tileSize = originalTileSize * scale; // 48x48 tile
 	public final int maxScreenCol = 30;
@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Player player = new Player(this, keyH);
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public Sound sound = new Sound();
-	public Interface ui = new Interface();
+	public Interface ui = new Interface(this);
 	public EnemyNoLoot enemyNL = new EnemyNoLoot(this);
 	public Animation animation = new Animation(this);
 	
@@ -87,7 +87,9 @@ public class GamePanel extends JPanel implements Runnable{
 			if(delta >= 1) {
 				update();
 				repaint();
-				threadRunTime++;
+				if(animationPause == false) {
+					threadRunTime++;
+				}
 				time = Math.round(threadRunTime/60);
 				delta--;
 			}
